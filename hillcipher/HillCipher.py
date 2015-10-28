@@ -6,7 +6,7 @@ class HillCipher():
 
     def __init__(self):
         """ Setup the object."""
-        self.key = np.matrix('1 2; 3 4')
+        self.key = np.matrix('11 8; 3 7')
 
     def getKey(self):
         """ Return key being used for encryption."""
@@ -22,6 +22,66 @@ class HillCipher():
         Creates a valid random key for encryption. Here, valid means that the matrix is invertible.
         """
 
-        self.key = np.random.randint(25, size=(dim, dim))
+        self.key = np.random.randint(26, size=(dim, dim))
         if not np.linalg.det(self.key):
             self.setRandomKey(dim)
+
+    def encryptText(self, plaintext):
+        """ Encrypt a given plaintext string using key. 
+
+        INPUT
+        ---------
+        plaintext -- string plaintext
+
+        Returns the cipher text. The cipher text, for historic reasons is completely in UPPER case. That is, the operation does not preserve case of the input.
+
+        Also, any and all special characters, numbers and in fact anything other than alpha characters are completely removed/ignored.
+
+        For now assumes that the length of input plaintext is a multiple of key dimension.
+        """
+
+        # filter out special characters, numbers etc
+        alphachars = filter(lambda x: x.isalpha(), list(plaintext))
+        plaintext = "".join(alphachars)
+
+        # if length is not a perfect multiple, don't handle it 
+        if len(plaintext) % self.key.shape[0] != 0:
+            return None
+
+        plaintext = plaintext.lower()
+
+        # convert to numbers in range [0, 25]
+        ptchars = list(plaintext)
+        ptnos = map(lambda x: ord(x) - ord('a'),ptchars)
+
+        dim = self.key.shape[0]
+
+        # array of cpher
+        ctnos = []
+
+        for i in xrange(0, len(ptchars), dim):
+            # blocks of dim size
+            block = ptnos[i:i+dim]
+
+            # make a matrix out of the array
+            plainblock = np.matrix(block)
+
+            # encrypt the block
+            cipherblock = plainblock*self.key
+
+            # extract the numbers
+            ciphernos = cipherblock.getA1().tolist()
+
+            # add to ciphertext full list
+            ctnos += ciphernos
+
+        # apply mod to numbers
+        ctnos = map(lambda x: x%26, ctnos)
+
+        # map back to characters
+        ctchars = map(lambda x: chr(x + ord('a')), ctnos)
+
+        # create the text back from the characters
+        ciphertext = "".join(ctchars)
+
+        return ciphertext
