@@ -15,9 +15,14 @@ def main():
     print hc.getKey()
     """
 
-    plaintext = 'july'
+    #plaintext = 'july'
+    plaintext = 'act'
     print "Encrypting a plaintext: '{0}':".format(plaintext)
     print hc.encryptText(plaintext)
+
+    ciphertext = hc.encryptText(plaintext)
+    print "Decrypting a ciphertext: '{0}':".format(ciphertext)
+    print hc.decryptText(ciphertext)
 
 if __name__ == "__main__":
     main()

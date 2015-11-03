@@ -7,7 +7,9 @@ class HillCipher():
 
     def __init__(self):
         """ Setup the object."""
-        self.key = np.matrix('11 8; 3 7')
+        #self.key = np.matrix('11 8; 3 7')
+        #self.key = np.matrix('3 3; 2 5')
+        self.key = np.matrix('6 24 1; 13 16 10; 20 17 15')
 
     def getKey(self):
         """ Return key being used for encryption."""
@@ -56,11 +58,13 @@ class HillCipher():
         For now assumes that the length of input ciphertext is a multiple of key dimension.
         """
 
-        """
-        key = ???
+        key = helpers.inversematrix(self.key, 26)
+        if key == None:
+            # key is not invertible
+            print "Key is not valid."
+            return None
+        print key
         return self._encrypt(ciphertext, key)
-        """
-        pass
 
     def _encrypt(self, plaintext, key):
         """ Actual encryption function.
@@ -71,7 +75,7 @@ class HillCipher():
         plaintext = "".join(alphachars)
 
         # if length is not a perfect multiple, don't handle it 
-        if len(plaintext) % self.key.shape[0] != 0:
+        if len(plaintext) % key.shape[0] != 0 and key.shape[0] % len(plaintext) != 0:
             return None
 
         plaintext = plaintext.lower()
@@ -80,7 +84,7 @@ class HillCipher():
         ptchars = list(plaintext)
         ptnos = map(lambda x: ord(x) - ord('a'),ptchars)
 
-        dim = self.key.shape[0]
+        dim = key.shape[0]
 
         # array of cpher
         ctnos = []
