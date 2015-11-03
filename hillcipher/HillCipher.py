@@ -1,6 +1,7 @@
 """ Main Hill Cipher object."""
 
 import numpy as np
+import helpers
 
 class HillCipher():
 
@@ -39,6 +40,31 @@ class HillCipher():
 
         For now assumes that the length of input plaintext is a multiple of key dimension.
         """
+        return self._encrypt(plaintext, self.key)
+
+    def decryptText(self, ciphertext):
+        """ decrypt a given ciphertext string using key. 
+
+        INPUT
+        ---------
+        ciphertext -- string ciphertext
+
+        Returns the plain text. The plain text, for historic reasons is completely in LOWER case. That is, the operation does not preserve case of the input.
+
+        Also, any and all special characters, numbers and in fact anything other than alpha characters are completely removed/ignored.
+
+        For now assumes that the length of input ciphertext is a multiple of key dimension.
+        """
+
+        """
+        key = ???
+        return self._encrypt(ciphertext, key)
+        """
+        pass
+
+    def _encrypt(self, plaintext, key):
+        """ Actual encryption function.
+        """
 
         # filter out special characters, numbers etc
         alphachars = filter(lambda x: x.isalpha(), list(plaintext))
@@ -67,7 +93,7 @@ class HillCipher():
             plainblock = np.matrix(block)
 
             # encrypt the block
-            cipherblock = plainblock*self.key
+            cipherblock = plainblock*key
 
             # extract the numbers
             ciphernos = cipherblock.getA1().tolist()
