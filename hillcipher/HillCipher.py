@@ -9,7 +9,9 @@ class HillCipher():
         """ Setup the object."""
         #self.key = np.matrix('11 8; 3 7')
         #self.key = np.matrix('3 3; 2 5')
-        self.key = np.matrix('6 24 1; 13 16 10; 20 17 15')
+        #self.key = np.matrix('6 24 1; 13 16 10; 20 17 15')
+        #self.key = np.matrix('9 21 1; 13 12 10; 23 17 15')
+        self.key = np.matrix('9 21 1 2; 13 12 10 5; 23 17 15 7;7 6 27 3')
 
     def getKey(self):
         """ Return key being used for encryption."""
@@ -25,7 +27,7 @@ class HillCipher():
         Creates a valid random key for encryption. Here, valid means that the matrix is invertible.
         """
 
-        self.key = np.random.randint(26, size=(dim, dim))
+        self.key = np.random.randint(29, size=(dim, dim))
         if not np.linalg.det(self.key):
             self.setRandomKey(dim)
 
@@ -58,7 +60,7 @@ class HillCipher():
         For now assumes that the length of input ciphertext is a multiple of key dimension.
         """
 
-        key = helpers.inversematrix(self.key, 26)
+        key = helpers.inversematrix(self.key, 29)
         if key == None:
             # key is not invertible
             print "Key is not valid."
@@ -71,8 +73,8 @@ class HillCipher():
         """
 
         # filter out special characters, numbers etc
-        alphachars = filter(lambda x: x.isalpha(), list(plaintext))
-        plaintext = "".join(alphachars)
+        #alphachars = filter(lambda x: x.isalpha(), list(plaintext))
+        #plaintext = "".join(alphachars)
 
         # if length is not a perfect multiple, don't handle it 
         if len(plaintext) % key.shape[0] != 0 and key.shape[0] % len(plaintext) != 0:
@@ -106,7 +108,7 @@ class HillCipher():
             ctnos += ciphernos
 
         # apply mod to numbers
-        ctnos = map(lambda x: x%26, ctnos)
+        ctnos = map(lambda x: x%29, ctnos)
 
         # map back to characters
         ctchars = map(lambda x: chr(x + ord('a')), ctnos)

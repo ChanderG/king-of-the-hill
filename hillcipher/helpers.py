@@ -41,4 +41,5 @@ def inversematrix(matrix, q):
                 factor = A[j, i]
                 A[j] = (A[j] - factor * A[i]) % q
                 Ainv[j] = (Ainv[j] - factor * Ainv[i]) % q
+
     return Ainv

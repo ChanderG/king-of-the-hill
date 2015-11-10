@@ -16,7 +16,8 @@ def main():
     """
 
     #plaintext = 'july'
-    plaintext = 'act'
+    #plaintext = 'actbatman'
+    plaintext = 'johnmaryshawdane'
     print "Encrypting a plaintext: '{0}':".format(plaintext)
     print hc.encryptText(plaintext)
 
