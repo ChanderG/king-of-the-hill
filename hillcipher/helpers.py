@@ -43,3 +43,11 @@ def inversematrix(matrix, q):
                 Ainv[j] = (Ainv[j] - factor * Ainv[i]) % q
 
     return Ainv
+
+def takeMod(matrix, p):
+    """ Take mod of matrix with respect to p."""
+    for i in xrange(matrix.shape[0]):
+        for j in xrange(matrix.shape[1]):
+            matrix[i,j] = matrix[i,j]%p
+
+    return matrix

@@ -1,6 +1,7 @@
 """ Main Cryptanalysis module."""
 
 import helpers
+import numpy as np
 
 def attackHillCipher(ptnos, ctnos, key_size):
     """ Hill Cipher attack helper.
@@ -17,7 +18,36 @@ def attackHillCipher(ptnos, ctnos, key_size):
     The Key if successful.
 
     """
-    print "WIP"
+
+    # obtain candidates to create the matrix
+    ptcand = ptnos[:key_size*key_size]
+    ctcand = ctnos[:key_size*key_size]
+
+    ptmat = np.matrix(ptcand)
+    ptmat = np.reshape(ptmat, (key_size, key_size))
+
+    ctmat = np.matrix(ctcand)
+    ctmat = np.reshape(ctmat, (key_size, key_size))
+
+    invptmat = helpers.inversematrix(ptmat, 29) 
+    if invptmat == None:
+        return None
+
+    invptmat = helpers.takeMod(invptmat, 29)
+    key = invptmat*ctmat
+    key = helpers.takeMod(key, 29)
+
+    ptcheck = ptnos[key_size*key_size:key_size*key_size + key_size]
+    ctcheck = ctnos[key_size*key_size:key_size*key_size + key_size]
+
+    ptcheckmat = np.matrix(ptcheck)
+
+    ctcheckmat = ptcheckmat*key
+    ctcheckmat = helpers.takeMod(ctcheckmat, 29)
+    ctcheckmat = ctcheckmat.tolist()[0]
+
+    if ctcheckmat == ctcheck:
+        return key
     return None
 
 def cryptanalyzeHillcipher(plaintext, ciphertext):
@@ -69,4 +99,5 @@ def cryptanalyzeHillcipher(plaintext, ciphertext):
     if res == None:
         print "Unable to break the cipher."
     else:
-        print "Successfully cracked the cipher: ", res
+        print "Successfully cracked the cipher: "
+        print res

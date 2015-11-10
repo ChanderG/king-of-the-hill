@@ -79,6 +79,7 @@ class HillCipher():
 
         # if length is not a perfect multiple, don't handle it 
         if len(plaintext) % key.shape[0] != 0 and key.shape[0] % len(plaintext) != 0:
+            print "Length is not perfect multiple of key dimension."
             return None
 
         plaintext = plaintext.lower()
