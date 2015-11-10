@@ -8,16 +8,12 @@ def main():
     print "WIP."
     print "Init Key being used: \n{0}".format(hc.getKey())
 
-    """
     print "Setting random key of size 2:"
     hc.setRandomKey(2)
     print "New key is:"
     print hc.getKey()
-    """
 
-    #plaintext = 'july'
-    #plaintext = 'actbatman'
-    plaintext = 'johnmaryshawdane'
+    plaintext = 'july'
     print "Encrypting a plaintext: '{0}':".format(plaintext)
     print hc.encryptText(plaintext)
 

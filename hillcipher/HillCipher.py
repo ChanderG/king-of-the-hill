@@ -7,15 +7,15 @@ class HillCipher():
 
     def __init__(self):
         """ Setup the object."""
-        #self.key = np.matrix('11 8; 3 7')
-        #self.key = np.matrix('3 3; 2 5')
-        #self.key = np.matrix('6 24 1; 13 16 10; 20 17 15')
-        #self.key = np.matrix('9 21 1; 13 12 10; 23 17 15')
-        self.key = np.matrix('9 21 1 2; 13 12 10 5; 23 17 15 7;7 6 27 3')
+        self.key = np.matrix('11 8; 3 7')
 
     def getKey(self):
         """ Return key being used for encryption."""
         return self.key
+
+    def setKey(self, key):
+        """ Set key matrix."""
+        self.key = key
 
     def setRandomKey(self, dim=2):
         """ Set a random encryption key of specified dimension.
@@ -28,7 +28,8 @@ class HillCipher():
         """
 
         self.key = np.random.randint(29, size=(dim, dim))
-        if not np.linalg.det(self.key):
+        inv = helpers.inversematrix(self.key, 29)
+        if inv == None:
             self.setRandomKey(dim)
 
     def encryptText(self, plaintext):
