@@ -107,3 +107,5 @@ def cryptanalyzeHillcipher(plaintext, ciphertext):
     else:
         print "Successfully cracked the cipher: "
         print res
+
+    return res
