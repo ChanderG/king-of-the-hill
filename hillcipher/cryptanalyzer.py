@@ -29,23 +29,29 @@ def attackHillCipher(ptnos, ctnos, key_size):
     ctmat = np.matrix(ctcand)
     ctmat = np.reshape(ctmat, (key_size, key_size))
 
+    # invert the plaintext matrix
     invptmat = helpers.inversematrix(ptmat, 29) 
     if invptmat == None:
         return None
 
     invptmat = helpers.takeMod(invptmat, 29)
+
+    # mulitply the matrices and take an extra mod for safety
     key = invptmat*ctmat
     key = helpers.takeMod(key, 29)
 
+    # nos for checking the product
     ptcheck = ptnos[key_size*key_size:key_size*key_size + key_size]
     ctcheck = ctnos[key_size*key_size:key_size*key_size + key_size]
 
+    # 'encrypt' the candidate plain text to compare with known ciphertext
     ptcheckmat = np.matrix(ptcheck)
 
     ctcheckmat = ptcheckmat*key
     ctcheckmat = helpers.takeMod(ctcheckmat, 29)
     ctcheckmat = ctcheckmat.tolist()[0]
 
+    # check if our key_size is correct
     if ctcheckmat == ctcheck:
         return key
     return None
