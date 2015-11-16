@@ -7,7 +7,7 @@ import numpy as np
 
 class TestCryptanalyzer(TestCase):
 
-    plaintext28 = "hitherehowareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown" 
+    plaintext32 = "hithere|howareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown|||" 
     plaintext30 = "hithere|howareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown|" 
 
     def check_cryptanalysis(self, hc, plaintext):
@@ -18,7 +18,7 @@ class TestCryptanalyzer(TestCase):
     def test_2_key_crptanalysis(self):
         hc = hillcipher.HillCipher()
         hc.setKey(np.matrix('11 8; 3 7'))
-        self.check_cryptanalysis(hc, self.plaintext28)
+        self.check_cryptanalysis(hc, self.plaintext32)
         hc.setKey(np.matrix('3 3; 2 5'))
         self.check_cryptanalysis(hc, self.plaintext30)
 
@@ -29,12 +29,10 @@ class TestCryptanalyzer(TestCase):
         hc.setKey(np.matrix('9 21 1; 13 12 10; 23 17 15'))
         self.check_cryptanalysis(hc, self.plaintext30)
 
-    """
     def test_known_4_key(self):
         hc = hillcipher.HillCipher()
         hc.setKey(np.matrix('9 21 1 2; 13 12 10 5; 23 17 15 7;7 6 27 3'))
-        self.check_cryptanalysis28(hc)
-    """
+        self.check_cryptanalysis(hc, self.plaintext32)
 
     def test_known_5_key(self):
         hc = hillcipher.HillCipher()
