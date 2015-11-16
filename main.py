@@ -1,11 +1,18 @@
 #! /usr/bin/python
 
 import hillcipher
+import logging
 
 def main():
+    # setup simple logging
+    logging.basicConfig(level = logging.DEBUG,
+                        format = '%(levelname)s : %(message)s',
+                        filename = './hillcipher.log',
+                        filemode = 'w')
+
+    logging.info('Starting main')
     """ Interface to work with the Hill Cipher module."""
     hc = hillcipher.HillCipher()
-    print "WIP."
     print "Init Key being used: \n{0}".format(hc.getKey())
 
     """
@@ -26,6 +33,7 @@ def main():
     plaintext = "hithere|howareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown|" 
     ciphertext = hc.encryptText(plaintext)
     hillcipher.cryptanalyzer.cryptanalyzeHillcipher(plaintext, ciphertext)
+    logging.info('Ending main')
 
 if __name__ == "__main__":
     main()

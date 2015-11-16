@@ -2,6 +2,7 @@
 
 import helpers
 import numpy as np
+import logging
 
 def attackHillCipher(ptnos, ctnos, key_size):
     """ Hill Cipher attack helper.
@@ -18,7 +19,8 @@ def attackHillCipher(ptnos, ctnos, key_size):
     The Key if successful.
 
     """
-
+        
+    logging.debug("In funtion attackHillCipher - key_size == {0}".format(key_size))
     # obtain candidates to create the matrix
     ptcand = ptnos[:key_size*key_size]
     ctcand = ctnos[:key_size*key_size]
