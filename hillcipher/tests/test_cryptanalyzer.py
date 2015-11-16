@@ -9,6 +9,7 @@ class TestCryptanalyzer(TestCase):
 
     plaintext32 = "hithere|howareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown|||" 
     plaintext30 = "hithere|howareyou|iamfine|sendmanymenttothebatteredplainstonight|theambushisabouttogodown|" 
+    plaintext32b = "|||fantasticnews|wearereadyto{join}thebattle|havetwoshardbeareresandoneknightradiant|king|dk" 
 
     def check_cryptanalysis(self, hc, plaintext):
         ciphertext = hc.encryptText(plaintext)
@@ -32,7 +33,7 @@ class TestCryptanalyzer(TestCase):
     def test_known_4_key(self):
         hc = hillcipher.HillCipher()
         hc.setKey(np.matrix('9 21 1 2; 13 12 10 5; 23 17 15 7;7 6 27 3'))
-        self.check_cryptanalysis(hc, self.plaintext32)
+        self.check_cryptanalysis(hc, self.plaintext32b)
 
     def test_known_5_key(self):
         hc = hillcipher.HillCipher()

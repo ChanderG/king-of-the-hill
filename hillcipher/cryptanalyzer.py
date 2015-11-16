@@ -34,6 +34,7 @@ def attackHillCipher(ptnos, ctnos, key_size):
     # invert the plaintext matrix
     invptmat = helpers.inversematrix(ptmat, 29) 
     if invptmat == None:
+        logging.debug("Unable to invert plaintext matrix.")
         return None
 
     invptmat = helpers.takeMod(invptmat, 29)
@@ -55,7 +56,9 @@ def attackHillCipher(ptnos, ctnos, key_size):
 
     # check if our key_size is correct
     if ctcheckmat == ctcheck:
+        logging.debug("Key: {0}".format(key))
         return key
+    logging.debug("Key: None")
     return None
 
 def cryptanalyzeHillcipher(plaintext, ciphertext):
